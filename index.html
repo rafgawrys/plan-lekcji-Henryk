@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#527A9E">
+<title>Plan lekcji 1B</title>
+<style>
+  :root{
+    --blue:#527A9E;
+    --bg:#f6f7f9;
+    --text:#27313a;
+    --muted:#68737d;
+    --line:#d9dee3;
+    --basic:#dceaf7;
+    --lang:#ddefe2;
+    --sport:#fce1d6;
+    --art:#e9e0f5;
+    --extra:#fff0c7;
+    --special:#d8eef0;
+    --other:#ededed;
+    --break:#f1f2f4;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    background:white;
+    padding:18px 16px 12px;
+    position:sticky;
+    top:0;
+    z-index:10;
+    border-bottom:1px solid var(--line);
+  }
+  h1{
+    margin:0;
+    text-align:center;
+    font-size:23px;
+    font-weight:700;
+    letter-spacing:-.3px;
+  }
+  .status{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-top:5px;
+    min-height:18px;
+  }
+  .days{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding:10px 2px 2px;
+    scrollbar-width:none;
+  }
+  .days::-webkit-scrollbar{display:none}
+  .day{
+    flex:1 0 auto;
+    border:0;
+    border-radius:10px;
+    padding:9px 12px;
+    background:#eef1f4;
+    color:#4f5962;
+    font:inherit;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .day.active{
+    background:var(--blue);
+    color:white;
+  }
+  main{max-width:760px;margin:0 auto;padding:12px}
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin:0 0 12px;
+  }
+  .legend span{
+    font-size:11px;
+    padding:5px 8px;
+    border-radius:7px;
+  }
+  .basic{background:var(--basic)}
+  .lang{background:var(--lang)}
+  .sport{background:var(--sport)}
+  .art{background:var(--art)}
+  .extra{background:var(--extra)}
+  .special{background:var(--special)}
+  .other{background:var(--other)}
+  .lesson,.break{
+    border:1px solid var(--line);
+    border-radius:13px;
+    margin-bottom:8px;
+    overflow:hidden;
+    background:white;
+  }
+  .lesson{
+    display:grid;
+    grid-template-columns:82px 1fr;
+    min-height:76px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);
+  }
+  .time{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:8px;
+    background:#eef3f7;
+    color:#52606d;
+    font-size:12px;
+    line-height:1.25;
+  }
+  .subject{
+    display:flex;
+    align-items:center;
+    padding:13px 14px;
+    font-size:17px;
+    line-height:1.25;
+  }
+  .lesson.current{
+    outline:3px solid #527A9E;
+    outline-offset:-3px;
+  }
+  .lesson.current .subject:after{
+    content:"TERAZ";
+    margin-left:auto;
+    font-size:10px;
+    color:#527A9E;
+    padding-left:8px;
+  }
+  .break{
+    background:var(--break);
+    text-align:center;
+    color:#5f6770;
+    padding:9px 8px;
+    font-size:14px;
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .break .duration{color:#39434c;margin-left:5px}
+  .hidden{display:none}
+  .note{
+    text-align:center;
+    color:#8a9299;
+    font-size:11px;
+    padding:8px 0 18px;
+  }
+  @media (min-width:650px){
+    main{padding:18px}
+    .lesson{grid-template-columns:105px 1fr;min-height:82px}
+    .subject{font-size:18px}
+  }
+</style>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Plan 1B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+  #installHelp{
+    display:none;
+    margin:10px 0 0;
+    padding:10px 12px;
+    border-radius:10px;
+    background:#eef3f7;
+    color:#52606d;
+    font-size:12px;
+    line-height:1.35;
+  }
+  #installBtn{
+    display:block;
+    margin:8px auto 0;
+    border:0;
+    border-radius:9px;
+    padding:8px 12px;
+    background:#527A9E;
+    color:white;
+    font:inherit;
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Plan lekcji • klasa 1B</h1>
+  <div class="status" id="status"></div>
+  <button id="installBtn" type="button" onclick="showInstallHelp()">＋ Dodaj do ekranu głównego</button>
+  <div id="installHelp">Na iPhonie nie można dodać strony do ekranu głównego automatycznie. W Safari stuknij <b>Udostępnij</b> → <b>Dodaj do ekranu początkowego</b> → <b>Dodaj</b>. Potem plan będzie dostępny jak aplikacja.</div>
+  <div class="days" id="days"></div>
+</header>
+
+<main>
+  <div class="legend">
+    <span class="basic">Podstawowe</span>
+    <span class="lang">Języki</span>
+    <span class="sport">Sport i ruch</span>
+    <span class="art">Artystyczne</span>
+    <span class="extra">Dodatkowe</span>
+    <span class="special">Specjalne</span>
+  </div>
+  <div id="schedule"></div>
+  <div class="note">Plan można dodać do ekranu głównego telefonu jako skrót.</div>
+</main>
+
+<script>
+const days = ["Poniedziałek","Wtorek","Środa","Czwartek","Piątek"];
+const plan = {
+"Poniedziałek":[
+["8:30","9:15","Basen","sport"],
+["9:25","10:10","Zajęcia integracyjne","special"],
+["10:25","11:10","Zajęcia integracyjne","special"],
+["11:20","12:05","Edukacja wczesnoszkolna","basic"],
+["12:15","13:00","Edukacja wczesnoszkolna","basic"],
+["13:25","14:10","Konsultacje z edukacji wczesnoszkolnej","extra"],
+["14:30","15:15","Koło języka angielskiego","lang"],
+["15:20","16:05","Korektywa","extra"],
+["16:10","16:55","Koło informatyczne","extra"]
+],
+"Wtorek":[
+["8:30","9:15","Teatr","art"],
+["9:25","10:10","Informatyka","basic"],
+["10:25","11:10","Edukacja wczesnoszkolna","basic"],
+["11:20","12:05","Edukacja wczesnoszkolna","basic"],
+["12:15","13:00","Edukacja wczesnoszkolna","basic"],
+["13:25","14:10","Język angielski","lang"],
+["14:30","15:15","Muzyka","art"],
+["15:20","16:05","Ceramika i rzeźba","art"],
+["16:10","16:55","Klub logicznego myślenia","extra"]
+],
+"Środa":[
+["8:30","9:15","Język angielski","lang"],
+["9:25","10:10","Edukacja wczesnoszkolna","basic"],
+["10:25","11:10","Edukacja wczesnoszkolna","basic"],
+["11:20","12:05","Edukacja wczesnoszkolna","basic"],
+["12:15","13:00","Edukacja wczesnoszkolna","basic"],
+["13:25","14:10","Wychowanie fizyczne","sport"],
+["14:30","15:15","Wychowanie fizyczne","sport"],
+["15:20","16:05","SKS – dziewczęta (PZ) / SKS – chłopcy (PP)","sport"],
+["16:10","16:55","Koło taneczne","extra"]
+],
+"Czwartek":[
+["7:40","8:20","Koło języka angielskiego","lang"],
+["8:30","9:15","Religia","basic"],
+["9:25","10:10","Muzyka","art"],
+["10:25","11:10","Taniec","sport"],
+["11:20","12:05","Język angielski","lang"],
+["12:15","13:00","Edukacja wczesnoszkolna","basic"],
+["13:25","14:10","Edukacja wczesnoszkolna","basic"],
+["14:30","15:15","Konsultacje z edukacji wczesnoszkolnej","extra"],
+["16:10","16:55","Szachy","extra"]
+],
+"Piątek":[
+["8:30","9:15","Plastyka","art"],
+["9:25","10:10","Język angielski","lang"],
+["10:25","11:10","Edukacja wczesnoszkolna","basic"],
+["11:20","12:05","Edukacja wczesnoszkolna","basic"],
+["12:15","13:00","Edukacja wczesnoszkolna","basic"],
+["13:25","14:10","Edukacja wczesnoszkolna","basic"],
+["14:30","15:15","Wychowanie fizyczne","sport"],
+["15:20","16:05","Etyka","other"]
+]
+};
+
+function mins(t){const [h,m]=t.split(":").map(Number);return h*60+m}
+function dayIndex(){
+  const d=new Date().getDay(); // 0 Sun
+  return d>=1&&d<=5?d-1:null;
+}
+function formatBreak(a,b){
+  const n=mins(b)-mins(a);
+  return `<div class="break">Przerwa • ${a}–${b}<span class="duration">(${n} min)</span></div>`;
+}
+function render(idx){
+  document.querySelectorAll(".day").forEach((b,i)=>b.classList.toggle("active",i===idx));
+  const items=plan[days[idx]]||[];
+  let html="";
+  // Thursday starts at period 0; other days have no lesson at 7:40.
+  if(idx===3) html += formatBreak("7:40","8:30") .replace("Przerwa",""); // removed below
+  // Rebuild without fake first break: lesson starts 7:40, so no leading break.
+  html="";
+  items.forEach((x,i)=>{
+    if(i>0) html += formatBreak(items[i-1][1],x[0]);
+    html += `<div class="lesson ${isCurrent(x,idx)?"current":""}">
+      <div class="time">${x[0]}<br>–<br>${x[1]}</div>
+      <div class="subject ${x[3]}">${x[2]}</div>
+    </div>`;
+  });
+  document.getElementById("schedule").innerHTML=html;
+  updateStatus(idx);
+}
+function isCurrent(x,idx){
+  const now=new Date();
+  if(dayIndex()!==idx) return false;
+  const n=now.getHours()*60+now.getMinutes();
+  return n>=mins(x[0]) && n<mins(x[1]);
+}
+function updateStatus(idx){
+  const now=new Date();
+  const today=dayIndex();
+  const s=document.getElementById("status");
+  if(today===null){s.textContent=days[idx];return}
+  if(today!==idx){s.textContent=days[idx];return}
+  const n=now.getHours()*60+now.getMinutes();
+  const items=plan[days[idx]];
+  const current=items.find(x=>n>=mins(x[0])&&n<mins(x[1]));
+  const next=items.find(x=>n<mins(x[0]));
+  if(current) s.textContent=`Teraz: ${current[2]} • ${current[0]}–${current[1]}`;
+  else if(next) s.textContent=`Następne: ${next[2]} • ${next[0]}–${next[1]}`;
+  else s.textContent="Lekcje na dziś zakończone";
+}
+const dayBox=document.getElementById("days");
+days.forEach((d,i)=>{
+  const b=document.createElement("button");
+  b.className="day";
+  b.textContent=d;
+  b.onclick=()=>{render(i);history.replaceState(null,"",`#${i}`)};
+  dayBox.appendChild(b);
+});
+let initial=Number(location.hash.slice(1));
+if(!Number.isInteger(initial)||initial<0||initial>4) initial=dayIndex() ?? 0;
+render(initial);
+setInterval(()=>{ if(dayIndex()!==null) render(Number(document.querySelector(".day.active")?.dataset?.i ?? initial)); },60000);
+// iPhone install helper: iOS deliberately requires the user to confirm this action.
+function showInstallHelp(){
+  const h=document.getElementById("installHelp");
+  h.style.display = h.style.display==="block" ? "none" : "block";
+}
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
