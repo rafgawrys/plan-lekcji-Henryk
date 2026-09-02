@@ -7,19 +7,21 @@
 <title>Plan lekcji 1B</title>
 <style>
   :root{
-    --blue:#527A9E;
-    --bg:#f6f7f9;
-    --text:#27313a;
-    --muted:#68737d;
-    --line:#d9dee3;
-    --basic:#dceaf7;
-    --lang:#ddefe2;
-    --sport:#fce1d6;
-    --art:#e9e0f5;
-    --extra:#fff0c7;
-    --special:#d8eef0;
-    --other:#ededed;
-    --break:#f1f2f4;
+    --blue:#78b8ff;
+    --bg:#0d131b;
+    --surface:#17212d;
+    --surface-2:#202d3b;
+    --text:#edf4fb;
+    --muted:#a6b4c4;
+    --line:#314255;
+    --basic:#274b70;
+    --lang:#285f4b;
+    --sport:#7b4337;
+    --art:#574071;
+    --extra:#6d571e;
+    --special:#245b68;
+    --other:#3b4755;
+    --break:#1c2733;
   }
   *{box-sizing:border-box}
   body{
@@ -30,7 +32,7 @@
     -webkit-font-smoothing:antialiased;
   }
   header{
-    background:white;
+    background:rgba(23,33,45,.96);
     padding:18px 16px 12px;
     position:sticky;
     top:0;
@@ -64,15 +66,15 @@
     border:0;
     border-radius:10px;
     padding:9px 12px;
-    background:#eef1f4;
-    color:#4f5962;
+    background:var(--surface-2);
+    color:var(--muted);
     font:inherit;
     font-size:14px;
     cursor:pointer;
   }
   .day.active{
     background:var(--blue);
-    color:white;
+    color:#07111b;
   }
   main{max-width:760px;margin:0 auto;padding:12px}
   .legend{
@@ -81,10 +83,20 @@
     gap:6px;
     margin:0 0 12px;
   }
-  .legend span{
+  .legend button{
+    border:1px solid transparent;
+    color:var(--text);
+    font:inherit;
     font-size:11px;
     padding:5px 8px;
     border-radius:7px;
+    cursor:pointer;
+    transition:transform .15s ease, border-color .15s ease, filter .15s ease;
+  }
+  .legend button:hover,.legend button[aria-pressed="true"]{
+    transform:translateY(-1px);
+    border-color:rgba(255,255,255,.65);
+    filter:brightness(1.18);
   }
   .basic{background:var(--basic)}
   .lang{background:var(--lang)}
@@ -98,7 +110,7 @@
     border-radius:13px;
     margin-bottom:8px;
     overflow:hidden;
-    background:white;
+    background:var(--surface);
   }
   .lesson{
     display:grid;
@@ -112,8 +124,8 @@
     justify-content:center;
     text-align:center;
     padding:8px;
-    background:#eef3f7;
-    color:#52606d;
+    background:#223447;
+    color:#c4d4e4;
     font-size:12px;
     line-height:1.25;
   }
@@ -132,13 +144,13 @@
     content:"TERAZ";
     margin-left:auto;
     font-size:10px;
-    color:#527A9E;
+    color:var(--blue);
     padding-left:8px;
   }
   .break{
     background:var(--break);
     text-align:center;
-    color:#5f6770;
+    color:var(--muted);
     padding:9px 8px;
     font-size:14px;
     min-height:42px;
@@ -146,14 +158,28 @@
     align-items:center;
     justify-content:center;
   }
-  .break .duration{color:#39434c;margin-left:5px}
+  .break .duration{color:#d7e2ed;margin-left:5px}
   .hidden{display:none}
   .note{
     text-align:center;
-    color:#8a9299;
+    color:var(--muted);
     font-size:11px;
     padding:8px 0 18px;
   }
+  .category-panel{
+    display:none;
+    margin:0 0 12px;
+    padding:14px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:var(--surface);
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+  }
+  .category-panel.open{display:block}
+  .category-panel h2{font-size:15px;margin:0 0 10px;font-weight:600}
+  .category-panel ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .category-panel li{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border-radius:9px;background:var(--surface-2);font-size:13px}
+  .category-panel time{color:var(--muted);white-space:nowrap}
   @media (min-width:650px){
     main{padding:18px}
     .lesson{grid-template-columns:105px 1fr;min-height:82px}
@@ -172,8 +198,8 @@
     margin:10px 0 0;
     padding:10px 12px;
     border-radius:10px;
-    background:#eef3f7;
-    color:#52606d;
+    background:var(--surface-2);
+    color:var(--muted);
     font-size:12px;
     line-height:1.35;
   }
@@ -184,7 +210,7 @@
     border-radius:9px;
     padding:8px 12px;
     background:#527A9E;
-    color:white;
+    color:#07111b;
     font:inherit;
     font-size:12px;
   }
@@ -201,19 +227,26 @@
 
 <main>
   <div class="legend">
-    <span class="basic">Podstawowe</span>
-    <span class="lang">Języki</span>
-    <span class="sport">Sport i ruch</span>
-    <span class="art">Artystyczne</span>
-    <span class="extra">Dodatkowe</span>
-    <span class="special">Specjalne</span>
+    <button class="basic" data-category="basic" type="button" aria-pressed="false">Podstawowe</button>
+    <button class="lang" data-category="lang" type="button" aria-pressed="false">Języki</button>
+    <button class="sport" data-category="sport" type="button" aria-pressed="false">Sport i ruch</button>
+    <button class="art" data-category="art" type="button" aria-pressed="false">Artystyczne</button>
+    <button class="extra" data-category="extra" type="button" aria-pressed="false">Dodatkowe</button>
+    <button class="special" data-category="special" type="button" aria-pressed="false">Specjalne</button>
+    <button class="other" data-category="other" type="button" aria-pressed="false">Inne</button>
   </div>
+  <section class="category-panel" id="categoryPanel" aria-live="polite"></section>
   <div id="schedule"></div>
   <div class="note">Plan można dodać do ekranu głównego telefonu jako skrót.</div>
 </main>
 
 <script>
 const days = ["Poniedziałek","Wtorek","Środa","Czwartek","Piątek"];
+const categoryNames = {
+  basic:"Zajęcia podstawowe", lang:"Języki", sport:"Sport i ruch",
+  art:"Zajęcia artystyczne", extra:"Zajęcia dodatkowe",
+  special:"Zajęcia specjalne", other:"Inne zajęcia"
+};
 const plan = {
 "Poniedziałek":[
 ["8:30","11:10","Basen","sport"],
@@ -279,6 +312,26 @@ function formatBreak(a,b){
   const n=mins(b)-mins(a);
   return `<div class="break">Przerwa • ${a}–${b}<span class="duration">(${n} min)</span></div>`;
 }
+function showCategory(category){
+  const panel=document.getElementById("categoryPanel");
+  const selected=panel.dataset.category===category && panel.classList.contains("open");
+  document.querySelectorAll("[data-category]").forEach(b=>b.setAttribute("aria-pressed",String(!selected && b.dataset.category===category)));
+  if(selected){
+    panel.classList.remove("open");
+    panel.dataset.category="";
+    panel.innerHTML="";
+    return;
+  }
+  const entries=[];
+  days.forEach(day=>(plan[day]||[]).forEach(item=>{
+    if(item[3]===category) entries.push({day,start:item[0],end:item[1],subject:item[2]});
+  }));
+  panel.dataset.category=category;
+  panel.innerHTML=`<h2>${categoryNames[category]}</h2><ul>${entries.map(item=>
+    `<li><span>${item.day} · ${item.subject}</span><time>${item.start}–${item.end}</time></li>`
+  ).join("")}</ul>`;
+  panel.classList.add("open");
+}
 function render(idx){
   document.querySelectorAll(".day").forEach((b,i)=>b.classList.toggle("active",i===idx));
   const items=plan[days[idx]]||[];
@@ -321,9 +374,13 @@ const dayBox=document.getElementById("days");
 days.forEach((d,i)=>{
   const b=document.createElement("button");
   b.className="day";
+  b.dataset.i=i;
   b.textContent=d;
   b.onclick=()=>{render(i);history.replaceState(null,"",`#${i}`)};
   dayBox.appendChild(b);
+});
+document.querySelectorAll("[data-category]").forEach(button=>{
+  button.addEventListener("click",()=>showCategory(button.dataset.category));
 });
 let initial=Number(location.hash.slice(1));
 if(!Number.isInteger(initial)||initial<0||initial>4) initial=dayIndex() ?? 0;
